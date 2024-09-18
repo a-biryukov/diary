@@ -1,0 +1,15 @@
+{% extends 'entries/index.html' %}
+{% block content %}
+
+<div class="container-8">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container-9">
+            <p>Хотите удалить профиль?</p>
+            <button type="submit">Да</button>
+            <a href="{% url 'users:user_detail' user.pk %}">Нет</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'entries/index.html' %}
+{% block content %}
+
+<div class="container-6">
+    <div class="cont-reg">
+        <form class="form-reg" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.nickname }}
+            <label class="nick__label" for="nick">Ник</label>
+            {{ form.email }}
+            <label class="email__label" for="email">Почта</label>
+            {{ form.password1 }}
+            <label class="pass1__label" for="password1">Пароль</label>
+            {{ form.password2 }}
+            <label class="pass2__label" for="password1">Подтверждение</label>
+            <button type="submit" class="btn-reg">Зарегистрироваться</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

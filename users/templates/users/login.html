@@ -1,0 +1,38 @@
+{% extends 'entries/index.html' %}
+{% block content %}
+
+<div class="container-4">
+    <div class="container-login">
+        <div class="container-login__left">
+            {% if not user.is_authenticated %}
+            <div class="cont-register">
+                <div class="register">
+                    <a href="{% url 'users:register' %}" class="btn-reg">Зарегистрироваться</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="container-login__right">
+            {% if user.is_authenticated %}
+            <div class="greetings">
+                <p>Привет, {{ user.nickname }}</p>
+            </div>
+            {% else %}
+            <div class="login">
+                <form class="form-control" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.username }}
+                    <label class="login__label" for="login">Почта</label>
+                    {{ form.password }}
+                    <label class="pass__label" for="password">Пароль</label>
+                    <button type="submit" class="btn-outline">Войти</button>
+                    <a href="{% url 'users:password_recovery' %}"class="pass-rec">Забыли пароль?</a>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container-faq-1"></div>
+    <div class="container-faq-2"></div>
+</div>
+{% endblock %}
