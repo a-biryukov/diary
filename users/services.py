@@ -7,11 +7,11 @@ from users.models import User
 
 def email_send(obj, password=None, url=None, fail_silently=True):
     """Функция отправки сообщений по электронной почте"""
-    if isinstance(obj, User) and password:
+    if password:
         subject = 'Восстановление пароля'
         message = f'Ваш новый пароль: {password}'
         recipient_list = [obj.email]
-    elif isinstance(obj, User) and url:
+    elif url:
         subject = 'Подтверждение почты'
         message = f'Перейдите по ссылке для подтверждения почты {url}'
         recipient_list = [obj.email]
