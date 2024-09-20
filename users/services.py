@@ -11,7 +11,7 @@ def email_send(obj, password=None, url=None, fail_silently=True):
         subject = 'Восстановление пароля'
         message = f'Ваш новый пароль: {password}'
         recipient_list = [obj.email]
-    elif url:
+    else:
         subject = 'Подтверждение почты'
         message = f'Перейдите по ссылке для подтверждения почты {url}'
         recipient_list = [obj.email]
