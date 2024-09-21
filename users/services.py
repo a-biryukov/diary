@@ -16,6 +16,7 @@ def email_send(obj, password=None, url=None):
         subject = 'Подтверждение почты'
         message = f'Перейдите по ссылке для подтверждения почты {url}'
         recipient_list = [obj.email]
+
     try:
         server_response = send_mail(
             subject=subject,
