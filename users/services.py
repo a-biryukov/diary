@@ -1,11 +1,12 @@
+import smtplib
 
 from django.core.mail import send_mail
 
 from config.settings import EMAIL_HOST_USER
-from users.models import User
+from users.models import User, Log
 
 
-def email_send(obj, password=None, url=None, fail_silently=True):
+def email_send(obj, password=None, url=None):
     """Функция отправки сообщений по электронной почте"""
     if password:
         subject = 'Восстановление пароля'
@@ -15,16 +16,20 @@ def email_send(obj, password=None, url=None, fail_silently=True):
         subject = 'Подтверждение почты'
         message = f'Перейдите по ссылке для подтверждения почты {url}'
         recipient_list = [obj.email]
-
-    server_response = send_mail(
-        subject=subject,
-        message=message,
-        from_email=EMAIL_HOST_USER,
-        recipient_list=recipient_list,
-        fail_silently=fail_silently
-    )
-    if not fail_silently:
-        return server_response
+    try:
+        server_response = send_mail(
+            subject=subject,
+            message=message,
+            from_email=EMAIL_HOST_USER,
+            recipient_list=recipient_list,
+        )
+    except smtplib.SMTPException as e:
+        server_response = e
+        status = False
+    else:
+        status = True
+    finally:
+        Log.objects.create(status=status, server_response=server_response, user=obj)
 
 
 def user_verify(user, host) -> None:
