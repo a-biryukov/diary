@@ -63,9 +63,9 @@ class EntryListView(LoginRequiredMixin, generic.ListView):
         user = self.request.user
         queryset = super().get_queryset(*args, **kwargs)
         if query:
-            queryset = search_by_title_abd_text(queryset, query, user).order_by('published_at').reverse()
+            queryset = search_by_title_abd_text(queryset, query, user).order_by('changed_at').reverse()
         else:
-            queryset = queryset.filter(owner=user).order_by('published_at').reverse()
+            queryset = queryset.filter(owner=user).order_by('changed_at').reverse()
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):

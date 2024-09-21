@@ -50,3 +50,17 @@ class User(AbstractUser):
             raw_password = ''.join(secrets.choice(alphabet) for i in range(8))
             super().set_password(raw_password)
             return raw_password
+
+
+class Log(models.Model):
+    time = models.DateTimeField(verbose_name='Дата и время попытки отправки', auto_now_add=True)
+    status = models.BooleanField(verbose_name='Статус попытки отправки')
+    server_response = models.CharField(max_length=150, verbose_name='Ответ почтового сервера', **NULLABLE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+
+    def __str__(self):
+        return f' {self.time}, {self.status}, {self.server_response}'
+
+    class Meta:
+        verbose_name = "Попытка отправки сообщения"
+        verbose_name_plural = "Попытки отправки сообщения"
